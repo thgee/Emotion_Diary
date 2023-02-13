@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import DiaryItem from "./DiaryItem";
 import MyButton from "./MyButton";
 
 const ControlMenu = ({ value, onChange, optionList }) => {
@@ -81,7 +82,9 @@ const DiaryList = ({ diaryList }) => {
       </div>
 
       {getProcessDiaryList().map((it) => (
-        <div key={it.id}>{it.content}</div>
+        <div key={it.id}>
+          <DiaryItem {...it} />
+        </div>
       ))}
     </div>
   );
