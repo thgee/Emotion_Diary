@@ -84,9 +84,9 @@ function App() {
       type: "CREATE",
       data: {
         id: dataId.current,
-        date: new Date(date).getTime(),
-        content,
         emotion,
+        content,
+        date: new Date(date).getTime(),
       },
     });
     dataId.current++;

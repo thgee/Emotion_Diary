@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { DiaryDispatchContext } from "../App";
 
@@ -35,15 +35,22 @@ const emotionList = [
   },
 ];
 
-const DiaryEditor = () => {
+const DiaryEditor = ({ targetDiary, isEdit }) => {
   const navigate = useNavigate();
   const { onCreate } = useContext(DiaryDispatchContext);
   const contentRef = useRef();
   const emotionRef = useRef();
 
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [content, setContent] = useState("");
   const [selectedEmotion, setSelectedEmotion] = useState(0);
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+
+  if (isEdit) {
+    console.log(targetDiary.content);
+    setContent(targetDiary.content);
+    setSelectedEmotion(targetDiary.emotion);
+    setDate(targetDiary.date);
+  }
 
   const isSelected = (target_id) => {
     setSelectedEmotion(target_id);
@@ -76,7 +83,7 @@ const DiaryEditor = () => {
             }}
           />
         }
-        headText="새 일기쓰기"
+        headText={isEdit ? "수정하기" : "새 일기쓰기"}
       />
       <section>
         <h3>오늘은 언제인가요?</h3>
