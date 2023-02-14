@@ -7,33 +7,8 @@ import MyHeader from "./MyHeader";
 import EmotionItem from "./EmotionItem";
 import MyButton from "./MyButton";
 
-const emotionList = [
-  {
-    emotion_id: 5,
-    emotion_img: process.env.PUBLIC_URL + "/assets/emotion5.png",
-    emotion_descript: "완전 좋음",
-  },
-  {
-    emotion_id: 4,
-    emotion_img: process.env.PUBLIC_URL + "/assets/emotion4.png",
-    emotion_descript: "좋음",
-  },
-  {
-    emotion_id: 3,
-    emotion_img: process.env.PUBLIC_URL + "/assets/emotion3.png",
-    emotion_descript: "그럭저럭",
-  },
-  {
-    emotion_id: 2,
-    emotion_img: process.env.PUBLIC_URL + "/assets/emotion2.png",
-    emotion_descript: "나쁨",
-  },
-  {
-    emotion_id: 1,
-    emotion_img: process.env.PUBLIC_URL + "/assets/emotion1.png",
-    emotion_descript: "끔찍함",
-  },
-];
+import getDate, { getCurrentDate } from "../utils/getDate";
+import emotionList from "../utils/emotionList";
 
 const DiaryEditor = ({ targetDiary, isEdit }) => {
   const navigate = useNavigate();
@@ -43,14 +18,15 @@ const DiaryEditor = ({ targetDiary, isEdit }) => {
 
   const [content, setContent] = useState("");
   const [selectedEmotion, setSelectedEmotion] = useState(0);
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [date, setDate] = useState(getCurrentDate());
 
-  if (isEdit) {
-    console.log(targetDiary.content);
-    setContent(targetDiary.content);
-    setSelectedEmotion(targetDiary.emotion);
-    setDate(targetDiary.date);
-  }
+  useEffect(() => {
+    if (isEdit) {
+      setContent(targetDiary.content);
+      setSelectedEmotion(targetDiary.emotion);
+      setDate(getDate(getDate(targetDiary.date)));
+    }
+  }, []);
 
   const isSelected = (target_id) => {
     setSelectedEmotion(target_id);

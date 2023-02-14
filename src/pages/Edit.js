@@ -15,13 +15,18 @@ const Edit = () => {
   useEffect(() => {
     if (targetDiary) {
     } else {
+      alert("없는 일기입니다 !");
       navigate("/", { replace: true });
     }
   }, []);
 
   return (
     <div className="Edit">
-      <DiaryEditor targetDiary={targetDiary} isEdit={isEdit} />
+      {targetDiary ? (
+        <DiaryEditor targetDiary={targetDiary} isEdit={isEdit} />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
