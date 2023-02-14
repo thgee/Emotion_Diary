@@ -1,10 +1,18 @@
 import { useNavigate } from "react-router-dom";
+import { useContext, memo } from "react";
 
 import MyButton from "./MyButton";
-import EmotionItem from "./EmotionItem";
+
+import { DiaryDispatchContext } from "../App";
 
 const DiaryItem = ({ id, emotion, content, date }) => {
   const navigate = useNavigate();
+  const { onRemove } = useContext(DiaryDispatchContext);
+
+  const handleRemove = () => {
+    if (window.confirm("일기를 삭제하시겠습니까?")) onRemove(id);
+    return;
+  };
 
   return (
     <div className="DiaryItem">
@@ -22,9 +30,10 @@ const DiaryItem = ({ id, emotion, content, date }) => {
 
       <div className="btn_wrapper">
         <MyButton onClick={() => navigate(`/edit/${id}`)} text="수정하기" />
+        <MyButton onClick={handleRemove} text="삭제하기" type="negative" />
       </div>
     </div>
   );
 };
 
-export default DiaryItem;
+export default memo(DiaryItem);

@@ -15,6 +15,9 @@ const Diary = () => {
   const data = useContext(DiaryStateContext);
 
   useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0];
+    titleElement.innerHTML = `${id}번째 일기`;
+
     if (targetDiary.id === -1) {
       alert("존재하지 않는 일기입니다 !");
       navigate("/", { replace: true });

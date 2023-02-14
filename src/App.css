@@ -176,6 +176,14 @@ header button {
   font-size: 18px;
 }
 
+.DiaryItem .btn_wrapper {
+  align-self: center;
+}
+
+.DiaryItem .btn_wrapper .MyButton {
+  margin: 4px;
+}
+
 /* DiaryEditor */
 
 .DiaryEditor > section {

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useContext } from "react";
+import { useCallback, useEffect, useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { DiaryDispatchContext } from "../App";
 
@@ -12,7 +12,7 @@ import emotionList from "../utils/emotionList";
 
 const DiaryEditor = ({ targetDiary, isEdit }) => {
   const navigate = useNavigate();
-  const { onCreate } = useContext(DiaryDispatchContext);
+  const { onCreate, onEdit } = useContext(DiaryDispatchContext);
   const contentRef = useRef();
   const emotionRef = useRef();
 
@@ -28,10 +28,10 @@ const DiaryEditor = ({ targetDiary, isEdit }) => {
     }
   }, []);
 
-  const isSelected = (target_id) => {
-    setSelectedEmotion(target_id);
-    if (selectedEmotion === target_id) setSelectedEmotion(0);
-  };
+  const isSelected = useCallback((target_emotion_id) => {
+    setSelectedEmotion(target_emotion_id);
+    if (selectedEmotion === target_emotion_id) setSelectedEmotion(0);
+  }, []);
 
   const handleSubmit = () => {
     if (selectedEmotion === 0) {
@@ -46,6 +46,20 @@ const DiaryEditor = ({ targetDiary, isEdit }) => {
 
     navigate("/", { replace: true });
     onCreate(date, content, selectedEmotion);
+  };
+
+  const handleEdit = () => {
+    if (selectedEmotion === 0) {
+      emotionRef.current.focus();
+      return;
+    }
+
+    if (content.length === 0) {
+      contentRef.current.focus();
+      return;
+    }
+    navigate("/", { replace: true });
+    onEdit(targetDiary.id, date, content, selectedEmotion);
   };
 
   return (
@@ -105,11 +119,19 @@ const DiaryEditor = ({ targetDiary, isEdit }) => {
               navigate(-1);
             }}
           />
-          <MyButton
-            text={"작성완료"}
-            onClick={handleSubmit}
-            type={"positive"}
-          />
+          {isEdit ? (
+            <MyButton
+              text={"수정완료"}
+              onClick={handleEdit}
+              type={"positive"}
+            />
+          ) : (
+            <MyButton
+              text={"작성완료"}
+              onClick={handleSubmit}
+              type={"positive"}
+            />
+          )}
         </div>
       </section>
     </div>

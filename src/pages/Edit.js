@@ -13,6 +13,9 @@ const Edit = () => {
   const targetDiary = data.find((it) => parseInt(it.id) === parseInt(id));
 
   useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0];
+    titleElement.innerHTML = `${id}번째 일기 수정`;
+
     if (targetDiary) {
     } else {
       alert("없는 일기입니다 !");
@@ -22,11 +25,7 @@ const Edit = () => {
 
   return (
     <div className="Edit">
-      {targetDiary ? (
-        <DiaryEditor targetDiary={targetDiary} isEdit={isEdit} />
-      ) : (
-        <></>
-      )}
+      {targetDiary && <DiaryEditor targetDiary={targetDiary} isEdit={isEdit} />}
     </div>
   );
 };
