@@ -32,10 +32,10 @@ const Diary = () => {
   const targetDiary = getTargetDiary();
 
   const currentEmotion = emotionList.find(
-    (it) => parseInt(it.emotion_id) === parseInt(targetDiary.id)
+    (it) => parseInt(it.emotion_id) === parseInt(targetDiary.emotion)
   );
 
-  if (targetDiary.id === -1) return;
+  if (targetDiary.emotion === -1) return;
   else
     return (
       <div className="Diary">
@@ -63,7 +63,7 @@ const Diary = () => {
           <section>
             <h3>오늘의 감정</h3>
             <div
-              className={`emotion_wrapper emotion_wrapper_${targetDiary.id}`}
+              className={`emotion_wrapper emotion_wrapper_${targetDiary.emotion}`}
             >
               <img src={currentEmotion.emotion_img} />
               <div> {currentEmotion.emotion_descript}</div>
