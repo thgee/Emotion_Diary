@@ -35,7 +35,7 @@ const Diary = () => {
     (it) => parseInt(it.emotion_id) === parseInt(targetDiary.emotion)
   );
 
-  if (targetDiary.emotion === -1) return;
+  if (targetDiary.id === -1) return;
   else
     return (
       <div className="Diary">
